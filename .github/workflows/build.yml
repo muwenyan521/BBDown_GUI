@@ -172,21 +172,15 @@ jobs:
         draft: true
         generate_release_notes: true
         body: |
-          蓝奏云：https://zhiyuyu.lanzout.com/b09axrdjc 密码:down
+          蓝奏云：https://pan.huang1111.cn/s/k2qlocB
 
           ### 适配 ${{ env.bbdown_version }} 及之后版本
 
-          ### 适配 BBDown
-
-          - 下载地址引入双引号 #10 https://github.com/nilaoda/BBDown/issues/444 e48763e4c34931a666af81aeed8a4d2caa6aa8ce
-          - 跳过AI字幕选项 开启和关闭 #11 411dffc59f5b7dc7b16eb8c51078c7c40571d394
-
           ### 添加功能
 
-          - 完全隐去了命令行界面，输出在可视化窗口中 00715255a1d857f3195e91ce9ee2a7f960e4808e
-          - 引入了停止下载的功能 a993b061c3a9b20ceae0191412240f36b555f66a
+          - 重构&去除无用 09b64ba0d23d84b9bc364dd52f5118d59ecf05b7
 
-          ### 本次更新后蓝奏云包含的各软件版本
+          ### 本次更新后网盘包含的各软件版本
           - BBDown - GUI ${{ env.bbdown_gui_version }}
           - ${{ env.bbdown_version }}
           - FFmpeg ${{ env.ffmpeg_version }}
