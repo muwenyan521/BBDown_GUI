@@ -25,6 +25,7 @@
   <property name="windowTitle">
    <string>BBDown - GUI</string>
   </property>
+
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
@@ -37,11 +38,8 @@
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QCheckBox" name="checkBox_ffmpeg">
-      <property name="whatsThis">
-       <string/>
-      </property>
       <property name="text">
-       <string>ffmpeg</string>
+       <string>使用 ffmpeg</string>
       </property>
       <property name="checked">
        <bool>true</bool>
@@ -50,19 +48,13 @@
     </item>
     <item>
      <widget class="QLineEdit" name="lineEdit_ffmpeg">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="readOnly">
-       <bool>false</bool>
+      <property name="placeholderText">
+       <string>输入 ffmpeg 路径</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="pushButton_ffmpeg">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
       <property name="text">
        <string>浏览</string>
       </property>
@@ -70,6 +62,7 @@
     </item>
    </layout>
   </widget>
+
   <widget class="QWidget" name="horizontalLayoutWidget_3">
    <property name="geometry">
     <rect>
@@ -89,16 +82,13 @@
     </item>
     <item>
      <widget class="QLineEdit" name="lineEdit_dir">
-      <property name="text">
-       <string/>
+      <property name="placeholderText">
+       <string>选择下载目录</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="pushButton_dir">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
       <property name="text">
        <string>打开</string>
       </property>
@@ -106,6 +96,7 @@
     </item>
    </layout>
   </widget>
+
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
@@ -149,6 +140,7 @@
     </item>
    </widget>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
@@ -192,6 +184,7 @@
     </item>
    </widget>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_3">
    <property name="geometry">
     <rect>
@@ -231,6 +224,7 @@
     </layout>
    </widget>
   </widget>
+
   <widget class="QWidget" name="horizontalLayoutWidget_4">
    <property name="geometry">
     <rect>
@@ -250,22 +244,14 @@
     </item>
     <item>
      <widget class="QLineEdit" name="lineEdit_url">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>24</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;视频地址 或 av bv BV ep ss&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <property name="placeholderText">
+       <string>输入视频链接</string>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
+
   <widget class="QPushButton" name="pushButton_download">
    <property name="geometry">
     <rect>
@@ -279,6 +265,7 @@
     <string>下载</string>
    </property>
   </widget>
+
   <widget class="QPushButton" name="pushButton_advanced">
    <property name="geometry">
     <rect>
@@ -292,10 +279,8 @@
     <string>高级选项&gt;</string>
    </property>
   </widget>
+
   <widget class="QPushButton" name="pushButton_about">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -308,6 +293,7 @@
     <string>关于</string>
    </property>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_4">
    <property name="geometry">
     <rect>
@@ -346,17 +332,15 @@
      </item>
      <item>
       <widget class="QLineEdit" name="lineEdit_mp4box_path">
-       <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;mp4box的路径&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="whatsThis">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;路径不要包含空格&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <property name="placeholderText">
+        <string>输入 MP4Box 路径</string>
        </property>
       </widget>
      </item>
     </layout>
    </widget>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_5">
    <property name="geometry">
     <rect>
@@ -383,9 +367,6 @@
       <layout class="QVBoxLayout" name="verticalLayout_9">
        <item>
         <widget class="QCheckBox" name="checkBox_token">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;设置access_token用以下载TV/APP接口的会员内容&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
          <property name="text">
           <string>单独设置access_token</string>
          </property>
@@ -394,7 +375,7 @@
        <item>
         <widget class="QLineEdit" name="lineEdit_token">
          <property name="placeholderText">
-          <string/>
+          <string>输入 access_token</string>
          </property>
         </widget>
        </item>
@@ -404,9 +385,6 @@
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <item>
         <widget class="QCheckBox" name="checkBox_c">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;设置字符串cookie用以下载网页接口的会员内容&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
          <property name="text">
           <string>单独设置cookie</string>
          </property>
@@ -415,7 +393,7 @@
        <item>
         <widget class="QLineEdit" name="lineEdit_c">
          <property name="placeholderText">
-          <string/>
+          <string>输入 cookie</string>
          </property>
         </widget>
        </item>
@@ -424,6 +402,7 @@
     </layout>
    </widget>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_6">
    <property name="geometry">
     <rect>
@@ -477,6 +456,7 @@
     </layout>
    </widget>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_7">
    <property name="geometry">
     <rect>
@@ -576,6 +556,7 @@
     </layout>
    </widget>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_8">
    <property name="geometry">
     <rect>
@@ -592,7 +573,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>20</x>
       <width>174</width>
       <height>141</height>
      </rect>
@@ -609,9 +590,6 @@
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <widget class="QCheckBox" name="checkBox_p">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;选择指定分p或分p范围：(-p 8 或 -p 1,2 或 -p 3-5 或 -p ALL)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
          <property name="text">
           <string>指定下载分P</string>
          </property>
@@ -619,9 +597,6 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_p">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;选择指定分p或分p范围：(-p 8 或 -p 1,2 或 -p 3-5 或 -p ALL)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
          <property name="placeholderText">
           <string>如1,2或3-5或ALL或NEW</string>
          </property>
@@ -633,9 +608,6 @@
       <layout class="QVBoxLayout" name="verticalLayout_11">
        <item>
         <widget class="QCheckBox" name="checkBox_p_delay">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;设置下载合集分P之间的下载间隔时间(单位: 秒, 默认无间隔)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
          <property name="text">
           <string>分P下载时间间隔</string>
          </property>
@@ -653,6 +625,7 @@
     </layout>
    </widget>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_9">
    <property name="geometry">
     <rect>
@@ -706,6 +679,7 @@
     </layout>
    </widget>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_10">
    <property name="geometry">
     <rect>
@@ -759,6 +733,7 @@
     </layout>
    </widget>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_11">
    <property name="geometry">
     <rect>
@@ -803,9 +778,6 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBox_language">
-       <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;设置混流的音频语言(代码)，如chi, jpn等&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
        <property name="text">
         <string>设置混流的音频语言代码</string>
        </property>
@@ -821,11 +793,12 @@
     </layout>
    </widget>
   </widget>
+
   <widget class="QWidget" name="horizontalLayoutWidget_5">
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>420</y>
+     <y>420</x>
      <width>571</width>
      <height>31</height>
     </rect>
@@ -840,11 +813,8 @@
     </item>
     <item>
      <widget class="QLineEdit" name="lineEdit_bbdown">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;BBDown 程序位置&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <property name="placeholderText">
+       <string>输入 BBDown 程序位置</string>
       </property>
      </widget>
     </item>
@@ -857,6 +827,7 @@
     </item>
    </layout>
   </widget>
+
   <widget class="QWidget" name="horizontalLayoutWidget_2">
    <property name="geometry">
     <rect>
@@ -893,6 +864,7 @@
     </item>
    </layout>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_14">
    <property name="geometry">
     <rect>
@@ -1037,6 +1009,7 @@
     </item>
    </widget>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_12">
    <property name="geometry">
     <rect>
@@ -1077,11 +1050,8 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_aria2c_path">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="readOnly">
-          <bool>false</bool>
+         <property name="placeholderText">
+          <string>输入 aria2c 路径</string>
          </property>
         </widget>
        </item>
@@ -1091,9 +1061,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item>
         <widget class="QCheckBox" name="checkBox_aria2c_proxy">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;调用aria2c进行下载时的代理地址配置&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
          <property name="text">
           <string>代理地址</string>
          </property>
@@ -1101,8 +1068,8 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_aria2c_proxy">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;调用aria2c进行下载时的代理地址配置&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <property name="placeholderText">
+          <string>输入代理地址</string>
          </property>
         </widget>
        </item>
@@ -1125,6 +1092,7 @@
     </layout>
    </widget>
   </widget>
+
   <widget class="QGroupBox" name="groupBox_13">
    <property name="geometry">
     <rect>
@@ -1196,9 +1164,6 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_area">
-         <property name="text">
-          <string/>
-         </property>
          <property name="placeholderText">
           <string>如hk</string>
          </property>
@@ -1209,6 +1174,7 @@
     </layout>
    </widget>
   </widget>
+
   <widget class="QWidget" name="horizontalLayoutWidget_6">
    <property name="geometry">
     <rect>

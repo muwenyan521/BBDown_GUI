@@ -25,17 +25,28 @@
   <property name="windowTitle">
    <string>二维码登录</string>
   </property>
+  <property name="styleSheet">
+   <string>background-color: #f0f0f0;</string>
+  </property>
   <widget class="QLabel" name="label_QR">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>40</y>
+     <x>77</x>
+     <y>30</y>
      <width>300</width>
      <height>300</height>
     </rect>
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -49,6 +60,14 @@
    </property>
    <property name="text">
     <string>获取二维码中</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </widget>
  </widget>
