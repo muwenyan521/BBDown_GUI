@@ -172,7 +172,7 @@ jobs:
         draft: true
         generate_release_notes: true
         body: |
-          蓝奏云：https://pan.huang1111.cn/s/k2qlocB
+          网盘：https://pan.huang1111.cn/s/k2qlocB
 
           ### 适配 ${{ env.bbdown_version }} 及之后版本
 
