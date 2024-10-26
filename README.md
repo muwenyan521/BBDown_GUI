@@ -1,71 +1,53 @@
-# BBDown_GUI
-BBDown的图形化版本 - 哔哩哔哩(B站)视频下载、音频下载、字幕下载 - bilibili video download
+# BBDown_GUI：哔哩哔哩视频下载的图形化工具
 
-## 屏幕截图
+BBDown_GUI 是 BBDown 的图形化版本，专为哔哩哔哩（B站）视频、音频和字幕的下载而设计。
+
+## 界面预览
 
 ### 简易模式
-
-<img src="https://user-images.githubusercontent.com/29673994/169644975-066c4ac5-7fb1-4361-8c62-bb1e5aba4381.png" height="50%" width="50%" >
+![简易模式](https://user-images.githubusercontent.com/29673994/169644975-066c4ac5-7fb1-4361-8c62-bb1e5aba4381.png)
 
 ### 高级模式
+![高级模式](https://user-images.githubusercontent.com/29673994/200099369-51250aa4-bd7f-4547-864c-f552143adcc1.png)
 
-<img src="https://user-images.githubusercontent.com/29673994/200099369-51250aa4-bd7f-4547-864c-f552143adcc1.png">
+## 功能亮点
 
-## 特性
+- **记忆下载参数**：自动保存您的下载偏好，方便下次使用。
+- **灵活的剧集下载选项**：支持下载当前剧集、全部剧集或最新剧集。
+- **智能界面设计**：常用功能一目了然，同时提供完整的功能访问。
+- **下载进度控制**：实时监控和管理您的下载进度。
 
-- [x] 记忆下载参数
-- [x] 下载剧集选项（当前剧集、全部剧集、最新剧集）
-- [x] 优先显示常用选项，亦保留有所有功能
-- [x] 下载进度控制
+## 使用指南
 
-## 使用方法
+将 BBDown 的可执行程序与 BBDown_GUI 放置在同一文件夹中，直接运行即可。这样，即使 BBDown 主程序更新，您也可以直接替换使用。
 
-将 BBDown 的可执行程序与本 UI 程序置于同一文件夹中，直接运行即可。这样以后 BBDown 主程序更新也可以直接替换使用
+## 下载方式
 
-## 下载
+### 从 GitHub Releases 下载
+[![版本](https://img.shields.io/github/v/release/1299172402/BBDown_GUI?label=版本)](https://github.com/1299172402/BBDown_GUI/releases)
+预打包的二进制文件，包括 BBDown - GUI、BBDown、FFmpeg 和 Aria2c。
 
-### 从 [Releases](https://github.com/1299172402/BBDown_GUI/releases) 中下载使用 [![img](https://img.shields.io/github/v/release/1299172402/BBDown_GUI?label=%E7%89%88%E6%9C%AC)](https://github.com/1299172402/BBDown_GUI/releases) 
-
-预打包好的二进制文件，包括
-- BBDown - GUI
-- BBDown
-- FFmpeg
-- Aria2c
-
-### 从 [PyPI](https://pypi.org/project/BBDown-GUI/) 安装使用  [![](https://img.shields.io/pypi/v/BBDown_GUI)](https://pypi.org/project/BBDown-GUI/) 
-
-安装
-
-```
+### 通过 PyPI 安装
+[![PyPI 版本](https://img.shields.io/pypi/v/BBDown_GUI)](https://pypi.org/project/BBDown-GUI/)
+安装命令：
+```bash
 pip install BBDown-GUI
 ```
-
-运行（不区分大小写，下划线可省略）
-```
+运行命令（不区分大小写，下划线可省略）：
+```bash
 BBDown_GUI
 ```
 
-### 从源码运行使用
-```
+### 从源码运行
+```bash
 pip install -r requirements.txt
 python -m BBDown_GUI
 ```
 
-### 从[持续集成](https://github.com/1299172402/BBDown_GUI/actions/workflows/build.yml)中下载(beta version) [![Pack Python application](https://github.com/1299172402/BBDown_GUI/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/1299172402/BBDown_GUI/actions/workflows/build.yml)
-进入Actions，选择Pack Python application，进入需要下载的工作流
-![image](https://github.com/1299172402/BBDown_GUI/assets/29673994/d7944b79-ae96-4c6a-9892-f8e7d3238a61)
-到下方Artifacts下载BBDown_GUI
-![image](https://github.com/1299172402/BBDown_GUI/assets/29673994/45c92ba5-80cc-47db-b5cc-8abe23de2078)
+### 从持续集成下载（Beta 版本）
+[![打包 Python 应用](https://github.com/1299172402/BBDown_GUI/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/1299172402/BBDown_GUI/actions/workflows/build.yml)
+进入 Actions，选择 "Pack Python application"，进入需要下载的工作流，然后在 Artifacts 下载 BBDown_GUI。
 
+## 致谢与许可
 
-## 致谢&License
-
- - https://github.com/nilaoda/BBDown (MIT License)
-
-<!--
-
-## 相关Repository
-
- - [BBDown_hk](https://github.com/1299172402/BBDown_hk)
-
--->
+- BBDown_GUI 基于 [BBDown](https://github.com/nilaoda/BBDown) 开发，遵循 MIT 许可。
