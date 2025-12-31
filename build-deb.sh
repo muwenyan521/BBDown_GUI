@@ -103,8 +103,8 @@ rm -rf "$TEMP_DIR"
 # 使用PyInstaller构建可执行文件
 echo -e "${YELLOW}使用PyInstaller构建可执行文件...${NC}"
 pyinstaller --noconfirm --onefile --noconsole \
-    --icon "./BBDown_GUI/UI/favicon.ico" \
-    --add-data "./BBDown_GUI/UI/favicon.ico:./UI" \
+    --icon "./BBDown_GUI/UI/favicon.png" \
+    --add-data "./BBDown_GUI/UI/favicon.png:./UI" \
     --distpath "$BUILD_DIR" \
     "./build-to-exe.py"
 
@@ -116,7 +116,7 @@ cp "$BUILD_DIR/BBDown_GUI" "$DEB_DIR/usr/bin/bbdown-gui"
 cp "$BUILD_DIR/ffmpeg" "$DEB_DIR/usr/share/$PACKAGE_NAME/"
 cp "$BUILD_DIR/bbdown" "$DEB_DIR/usr/share/$PACKAGE_NAME/"
 cp "$BUILD_DIR/aria2c" "$DEB_DIR/usr/share/$PACKAGE_NAME/"
-cp "./BBDown_GUI/UI/favicon.ico" "$DEB_DIR/usr/share/icons/hicolor/256x256/apps/bbdown-gui.ico"
+cp "./BBDown_GUI/UI/favicon.png" "$DEB_DIR/usr/share/icons/hicolor/256x256/apps/bbdown-gui.png"
 
 # 创建包装脚本
 cat > "$DEB_DIR/usr/bin/bbdown-gui-wrapper" << 'EOF'

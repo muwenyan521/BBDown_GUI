@@ -92,8 +92,8 @@ rm -rf "$TEMP_DIR"
 # 使用PyInstaller构建可执行文件
 echo -e "${YELLOW}使用PyInstaller构建可执行文件...${NC}"
 pyinstaller --noconfirm --onefile --noconsole \
-    --icon "./BBDown_GUI/UI/favicon.ico" \
-    --add-data "./BBDown_GUI/UI/favicon.ico:./UI" \
+    --icon "./BBDown_GUI/UI/favicon.png" \
+    --add-data "./BBDown_GUI/UI/favicon.png:./UI" \
     --distpath "$BUILD_DIR" \
     "./build-to-exe.py"
 
@@ -111,7 +111,7 @@ cp "$BUILD_DIR/BBDown_GUI" "$APPDIR/usr/bin/"
 cp "$BUILD_DIR/ffmpeg" "$APPDIR/usr/bin/"
 cp "$BUILD_DIR/bbdown" "$APPDIR/usr/bin/"
 cp "$BUILD_DIR/aria2c" "$APPDIR/usr/bin/"
-cp "./BBDown_GUI/UI/favicon.ico" "$APPDIR/usr/share/icons/hicolor/256x256/apps/bbdown-gui.ico"
+cp "./BBDown_GUI/UI/favicon.png" "$APPDIR/usr/share/icons/hicolor/256x256/apps/bbdown-gui.png"
 
 # 创建.desktop文件
 cat > "$APPDIR/usr/share/applications/bbdown-gui.desktop" << EOF
@@ -172,7 +172,7 @@ echo -e "${YELLOW}构建AppImage...${NC}"
 ./linuxdeploy.AppImage \
     --appdir "$APPDIR" \
     --output appimage \
-    --icon-file "./BBDown_GUI/UI/favicon.ico" \
+    --icon-file "./BBDown_GUI/UI/favicon.png" \
     --desktop-file "$APPDIR/usr/share/applications/bbdown-gui.desktop"
 
 # 移动生成的AppImage到dist目录

@@ -28,7 +28,7 @@ class FormOutput(QMainWindow, Ui_Form_output):
         self.setupUi(self)
         self.args = args
         icon = QIcon()
-        icon.addPixmap(QPixmap(resource_path("./UI/favicon.ico")), QIcon.Normal, QIcon.Off)
+        icon.addPixmap(QPixmap(resource_path("./UI/favicon.png")), QIcon.Normal, QIcon.Off)
         self.setWindowIcon(icon)
         self.lineEdit_cmd.setText(self.args)
         self.lineEdit_cmd.setCursorPosition(0) # Set the cursor to the beginning

@@ -37,7 +37,7 @@ class FormLogin(QMainWindow, Ui_Form_QRcode):
         self.arg = arg
         self.setupUi(self)
         icon = QIcon()
-        icon.addPixmap(QPixmap(resource_path("./UI/favicon.ico")), QIcon.Normal, QIcon.Off)
+        icon.addPixmap(QPixmap(resource_path("./UI/favicon.png")), QIcon.Normal, QIcon.Off)
         self.setWindowIcon(icon)
         self.label_QR.setScaledContents(True)
         if (arg == "login") and (os.path.exists(os.path.join(workdir, "BBDown.data"))):

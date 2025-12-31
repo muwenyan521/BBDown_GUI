@@ -43,7 +43,7 @@ class FormMain(QMainWindow, Ui_Form_main):
         super(FormMain, self).__init__()
         self.setupUi(self)
         icon = QIcon()
-        icon.addPixmap(QPixmap(resource_path("./UI/favicon.ico")), QIcon.Normal, QIcon.Off)
+        icon.addPixmap(QPixmap(resource_path("./UI/favicon.png")), QIcon.Normal, QIcon.Off)
         self.setWindowIcon(icon)
         self.pushButton_login.clicked.connect(self.login)
         self.pushButton_logintv.clicked.connect(self.logintv)

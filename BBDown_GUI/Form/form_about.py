@@ -9,5 +9,5 @@ class FormAbout(QMainWindow, Ui_Form_about):
         super(FormAbout, self).__init__()
         self.setupUi(self)
         icon = QIcon()
-        icon.addPixmap(QPixmap(resource_path("./UI/favicon.ico")), QIcon.Normal, QIcon.Off)
+        icon.addPixmap(QPixmap(resource_path("./UI/favicon.png")), QIcon.Normal, QIcon.Off)
         self.setWindowIcon(icon)
