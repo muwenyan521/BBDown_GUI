@@ -46,16 +46,18 @@ python -m BBDown_GUI
 sudo apt-get update
 sudo apt-get install -y python3-pip python3-venv fakeroot
 
-# 运行构建脚本
-chmod +x build-linux.sh
-./build-linux.sh
+# 运行修复后的构建脚本（解决退出代码8问题）
+chmod +x build-linux-fixed.sh
+./build-linux-fixed.sh
 ```
 
 #### 构建.deb包
 ```bash
-chmod +x build-deb.sh
-./build-deb.sh
+chmod +x build-deb-fixed.sh
+./build-deb-fixed.sh
 ```
+
+**注意**：修复版本（build-linux-fixed.sh 和 build-deb-fixed.sh）解决了原始脚本中的网络错误问题（退出代码8），添加了重试机制和更好的错误处理。建议使用修复版本进行构建。
 
 ### 从[持续集成](https://github.com/muwenyan521/BBDown_GUI/actions/workflows/build.yml)中下载(beta version) [![Pack Python application](https://github.com/muwenyan521/BBDown_GUI/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/muwenyan521/BBDown_GUI/actions/workflows/build.yml)
 进入Actions，选择Pack Python application，进入需要下载的工作流

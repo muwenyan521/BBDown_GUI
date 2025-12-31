@@ -180,13 +180,13 @@ jobs:
 
     - name: Build AppImage
       run: |
-        chmod +x ./build-linux.sh
-        ./build-linux.sh
+        chmod +x ./build-linux-fixed.sh
+        ./build-linux-fixed.sh
 
     - name: Build DEB package
       run: |
-        chmod +x ./build-deb.sh
-        ./build-deb.sh
+        chmod +x ./build-deb-fixed.sh
+        ./build-deb-fixed.sh
 
     - name: Upload Linux Artifacts
       uses: actions/upload-artifact@v4
