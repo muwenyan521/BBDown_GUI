@@ -3,8 +3,8 @@ from setuptools import setup
 
 setup(
     name='BBDown_GUI',
-    version='$pypi-version$',
-    url='https://github.com/1299172402/BBDown_GUI',
+    version='1.0.0',  # 实际版本号，不再是占位符
+    url='https://github.com/muwenyan521/BBDown_GUI',
     license='MIT',
     author='之雨',
     description='BBDown using the graphical interface.',
@@ -19,7 +19,15 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX :: Linux',
+        'Operating System :: MacOS',
     ],
     entry_points={
         'console_scripts': [
@@ -30,14 +38,3 @@ setup(
         ],
     },
 )
-
-# 更改version
-# 清空dist文件夹内容
-# py -m pip install --upgrade build
-# py -m build
-# py -m pip install --upgrade twine
-# # 测试服务器
-# # py -m twine upload --repository testpypi dist/*
-# # py -m pip install --index-url https://test.pypi.org/simple/ --no-deps BBDown-GUI
-# 真实服务器
-# py -m twine upload dist/* -u __token__ -p <your_token>

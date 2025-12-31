@@ -1,6 +1,15 @@
 include README.md
 include LICENSE
 include BBDown_GUI/UI/favicon.ico
+# Windows executables
 include BBDown_GUI/BBDown.exe
 include BBDown_GUI/ffmpeg.exe
 include BBDown_GUI/aria2c.exe
+# Linux executables (for source distribution)
+include BBDown_GUI/bbdown
+include BBDown_GUI/ffmpeg
+include BBDown_GUI/aria2c
+# Build scripts
+include build-linux.sh
+include build-deb.sh
+include test-crossplatform.py

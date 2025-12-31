@@ -47,8 +47,16 @@ class FormMain(QMainWindow, Ui_Form_main):
         self.setWindowIcon(icon)
         self.pushButton_login.clicked.connect(self.login)
         self.pushButton_logintv.clicked.connect(self.logintv)
-        self.lineEdit_ffmpeg.setText(os.path.join(workdir, "ffmpeg.exe"))
-        self.lineEdit_aria2c_path.setText(os.path.join(workdir, "aria2c.exe"))
+        # 跨平台默认路径
+        import platform
+        system = platform.system()
+        if system == "Windows":
+            self.lineEdit_ffmpeg.setText(os.path.join(workdir, "ffmpeg.exe"))
+            self.lineEdit_aria2c_path.setText(os.path.join(workdir, "aria2c.exe"))
+        else:
+            # Linux/macOS: 尝试常见的可执行文件名
+            self.lineEdit_ffmpeg.setText(os.path.join(workdir, "ffmpeg"))
+            self.lineEdit_aria2c_path.setText(os.path.join(workdir, "aria2c"))
         self.lineEdit_dir.setText(os.path.join(workdir, "Download"))
         self.lineEdit_bbdown.setText(bbdowndir)
         self.pushButton_ffmpeg.clicked.connect(self.ffmpegpath)
@@ -77,20 +85,46 @@ class FormMain(QMainWindow, Ui_Form_main):
 
     # 设置ffmpeg位置
     def ffmpegpath(self):
-        filepath, _ = QFileDialog.getOpenFileName(self, "选择文件", os.getcwd(), "ffmpeg (ffmpeg.exe);;All Files (*.*)")
-        filepath = filepath.replace("/","\\")
+        # 跨平台文件选择器
+        import platform
+        system = platform.system()
+        if system == "Windows":
+            filter_str = "ffmpeg (ffmpeg.exe);;All Files (*.*)"
+        else:
+            filter_str = "ffmpeg (ffmpeg);;All Files (*.*)"
+        
+        filepath, _ = QFileDialog.getOpenFileName(self, "选择文件", os.getcwd(), filter_str)
+        # 保持原始路径格式，不强制替换分隔符
         self.lineEdit_ffmpeg.setText(filepath)
 
     # 设置下载目录
     def opendownpath(self):
         if not os.path.exists(self.lineEdit_dir.text()):
             os.makedirs(self.lineEdit_dir.text())
-        os.startfile(self.lineEdit_dir.text())
+        # 跨平台打开目录
+        import platform
+        import subprocess
+        dir_path = self.lineEdit_dir.text()
+        system = platform.system()
+        if system == "Windows":
+            os.startfile(dir_path)
+        elif system == "Darwin":  # macOS
+            subprocess.Popen(["open", dir_path])
+        else:  # Linux和其他Unix-like系统
+            subprocess.Popen(["xdg-open", dir_path])
 
     # 设置BBDown位置
     def bbdownpath(self):
-        filepath, _ = QFileDialog.getOpenFileName(self, "选择文件", os.getcwd(), "BBDown (BBDown.exe);;All Files (*.*)")
-        filepath = filepath.replace("/","\\")
+        # 跨平台文件选择器
+        import platform
+        system = platform.system()
+        if system == "Windows":
+            filter_str = "BBDown (BBDown.exe);;All Files (*.*)"
+        else:
+            filter_str = "BBDown (BBDown bbdown);;All Files (*.*)"
+        
+        filepath, _ = QFileDialog.getOpenFileName(self, "选择文件", os.getcwd(), filter_str)
+        # 保持原始路径格式，不强制替换分隔符
         self.lineEdit_bbdown.setText(filepath)
         global bbdowndir
         bbdowndir = self.lineEdit_bbdown.text()

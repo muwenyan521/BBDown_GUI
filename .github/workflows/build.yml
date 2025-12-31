@@ -1,4 +1,4 @@
-name: Pack Python application
+name: Build BBDown_GUI
 
 on:
   push:
@@ -6,17 +6,17 @@ on:
       - '**.md'
       - 'LICENSE'
   workflow_dispatch:
-      inputs:
-        doRelease:
-          description: 'Publish new release'
-          type: boolean
-          default: false
-          required: false
+    inputs:
+      doRelease:
+        description: 'Publish new release'
+        type: boolean
+        default: false
+        required: false
 
 jobs:
-  build:
-
+  build-windows:
     runs-on: windows-latest
+    name: Build Windows Executable
 
     steps:
     - uses: actions/checkout@v3
@@ -126,7 +126,6 @@ jobs:
         Invoke-WebRequest -Uri $browser_download_url -OutFile temp/aria2-win-64bit.zip
         Expand-Archive -Path temp/aria2-win-64bit.zip -DestinationPath ./temp
         mv temp/aria2-*/aria2c.exe dist/aria2c.exe
-
         Remove-Item -Recurse -Force ./temp
 
     - name: Set up Python 3.10
@@ -142,39 +141,96 @@ jobs:
         pyinstaller --noconfirm --onefile --noconsole --icon "./BBDown_GUI/UI/favicon.ico" --add-data "./BBDown_GUI/UI/favicon.ico;./UI"  "./build-to-exe.py"
         mv ./dist/build-to-exe.exe ./dist/BBDown_GUI.exe
     
-    - name: Upload a Build Artifact (Full)
+    - name: Upload Windows Artifact
       uses: actions/upload-artifact@v3.1.2
       with:
-        name: BBDown_GUI
+        name: BBDown_GUI-Windows
         path: dist
-    - name: Upload a Build Artifact (Single File)
-      uses: actions/upload-artifact@v3.1.2
-      with:
-        name: BBDown_GUI_single_file
-        path: dist/BBDown_GUI.exe
-    
 
-    - name: Compress the Full
+    - name: Compress Windows Release
       if: ${{ github.event.inputs.doRelease == 'true' }}
       run: |
         Write-Host "BBDown_GUI-Version: ${{ env.bbdown_gui_version }}"
         Write-Host "BBDown-Version: ${{ env.bbdown_version }}"
         Write-Host "FFmpeg-Version: ${{ env.ffmpeg_version }}"
         Write-Host "Aria2-Version: ${{ env.aria2_version }}"
-        Compress-Archive -Path dist/* -DestinationPath ./BBDown_GUI_Full.zip
-    - name: GH Release
-      if: ${{ github.event.inputs.doRelease == 'true' }}
+        Compress-Archive -Path dist/* -DestinationPath ./BBDown_GUI_Windows.zip
+
+  build-linux:
+    runs-on: ubuntu-latest
+    name: Build Linux Packages
+    needs: build-windows
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install Linux build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget unzip tar xz-utils fakeroot dpkg-dev
+        pip install -r requirements.txt
+        pip install pyinstaller
+
+    - name: Build AppImage
+      run: |
+        chmod +x ./build-linux.sh
+        ./build-linux.sh
+
+    - name: Build DEB package
+      run: |
+        chmod +x ./build-deb.sh
+        ./build-deb.sh
+
+    - name: Upload Linux Artifacts
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: BBDown_GUI-Linux
+        path: |
+          dist/BBDown_GUI.AppImage
+          dist/bbdown-gui_*.deb
+
+  release:
+    runs-on: ubuntu-latest
+    name: Create Release
+    if: ${{ github.event.inputs.doRelease == 'true' }}
+    needs: [build-windows, build-linux]
+
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: BBDown_GUI-Windows
+        path: windows-artifacts
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: BBDown_GUI-Linux
+        path: linux-artifacts
+
+    - name: Create Release
       uses: softprops/action-gh-release@v0.1.15
       with:
         files: |
-          dist/BBDown_GUI.exe
-          BBDown_GUI_Full.zip
+          windows-artifacts/BBDown_GUI.exe
+          windows-artifacts/BBDown_GUI_Windows.zip
+          linux-artifacts/BBDown_GUI.AppImage
+          linux-artifacts/bbdown-gui_*.deb
         draft: true
         generate_release_notes: true
         body: |
           蓝奏云：https://zhiyuyu.lanzout.com/b09axrdjc 密码:down
 
-          ### 适配 ${{ env.bbdown_version }} 及之后版本
+          ### 多平台支持更新
+
+          - 新增Linux平台支持（AppImage和.deb包）
+          - 改进跨平台兼容性
+          - 移除PyPI发布依赖
 
           ### 适配 BBDown
 
@@ -185,10 +241,28 @@ jobs:
 
           - 完全隐去了命令行界面，输出在可视化窗口中 00715255a1d857f3195e91ce9ee2a7f960e4808e
           - 引入了停止下载的功能 a993b061c3a9b20ceae0191412240f36b555f66a
+          - 跨平台目录打开支持（Windows/macOS/Linux）
+          - 跨平台可执行文件检测
 
-          ### 本次更新后蓝奏云包含的各软件版本
-          - BBDown - GUI ${{ env.bbdown_gui_version }}
-          - ${{ env.bbdown_version }}
-          - FFmpeg ${{ env.ffmpeg_version }}
-          - ${{ env.aria2_version }}
+          ### 本次更新包含的各软件版本
+          - BBDown GUI ${{ needs.build-windows.outputs.bbdown_gui_version }}
+          - BBDown ${{ needs.build-windows.outputs.bbdown_version }}
+          - FFmpeg ${{ needs.build-windows.outputs.ffmpeg_version }}
+          - Aria2 ${{ needs.build-windows.outputs.aria2_version }}
 
+          ### 安装说明
+
+          **Windows:**
+          - 下载 `BBDown_GUI.exe` 直接运行
+          - 或下载 `BBDown_GUI_Windows.zip` 完整包
+
+          **Linux:**
+          - AppImage: 下载 `BBDown_GUI.AppImage`，添加执行权限后运行
+            ```bash
+            chmod +x BBDown_GUI.AppImage
+            ./BBDown_GUI.AppImage
+            ```
+          - Debian/Ubuntu: 下载 `.deb` 包安装
+            ```bash
+            sudo dpkg -i bbdown-gui_*.deb
+            sudo apt-get install -f  # 如果遇到依赖问题

@@ -10,8 +10,15 @@ def get_workdir():
     return workdir
 
 def get_bbdowndir():
-    bbdowndir = os.path.join(get_workdir(), "BBDown.exe")
-    return bbdowndir
+    workdir = get_workdir()
+    # 跨平台支持：尝试不同的可执行文件名
+    possible_names = ["BBDown.exe", "bbdown.exe", "BBDown", "bbdown"]
+    for name in possible_names:
+        path = os.path.join(workdir, name)
+        if os.path.exists(path):
+            return path
+    # 如果都没找到，返回默认的Windows名称（向后兼容）
+    return os.path.join(workdir, "BBDown.exe")
 
 # 显示图标
 # 单文件打包引入外部资源
