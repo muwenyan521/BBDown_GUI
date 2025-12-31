@@ -139,55 +139,95 @@ else
     cp BBDown "$ORIGINAL_DIR/$BUILD_DIR/bbdown"
 fi
 
-# 下载aria2 (Linux版本) - 添加重试机制
-echo -e "${YELLOW}下载aria2...${NC}"
+# 下载 aria2 静态二进制 (Linux) - 支持自动架构检测 + 主备下载 + 重试
+echo -e "${YELLOW}下载 aria2 静态二进制...${NC}"
+
+# 自动检测系统架构
+ARCH=$(uname -m)
+if [[ "$ARCH" == "x86_64" ]]; then
+    ARIA2_FILE="aria2-x86_64-linux-musl_static.zip"
+elif [[ "$ARCH" == "aarch64" ]]; then
+    ARIA2_FILE="aria2-aarch64-linux-musl_static.zip"
+elif [[ "$ARCH" == "armv7l" || "$ARCH" == "armv6l" ]]; then
+    ARIA2_FILE="aria2-arm-linux-musleabi_static.zip"
+else
+    echo -e "${RED}错误: 不支持的架构 $ARCH${NC}"
+    exit 1
+fi
+
+# 主地址 + 备用加速地址
+MAIN_URL="https://github.com/abcfy2/aria2-static-build/releases/download/continuous/${ARIA2_FILE}"
+BACKUP_URLS=(
+    "https://ghproxy.com/${MAIN_URL}"
+    "https://kkgithub.com/${MAIN_URL}"
+    "https://download.nuaa.cf/${MAIN_URL#https://}"
+)
+
 ARIA2_URL=""
-for i in {1..3}; do
-    ARIA2_URL=$(curl -s --max-time 10 https://api.github.com/repos/aria2/aria2/releases/latest | grep -o "https://.*linux.*\.tar\.xz" | head -1) || true
-    if [ -n "$ARIA2_URL" ]; then
+DOWNLOAD_SUCCESS=false
+
+# 尝试主地址（最多2次）
+for i in {1..2}; do
+    echo -e "${YELLOW}尝试主地址 (第 $i 次)...${NC}"
+    if curl -sf --max-time 15 -I "$MAIN_URL" >/dev/null 2>&1; then
+        ARIA2_URL="$MAIN_URL"
         break
     fi
-    echo -e "${YELLOW}获取aria2 URL失败，重试 $i/3...${NC}"
     sleep 2
 done
 
+# 如果主地址失败，尝试备用地址
 if [ -z "$ARIA2_URL" ]; then
-    # 备用URL
-    ARIA2_URL="https://github.com/aria2/aria2/releases/latest/download/aria2-1.37.0-linux-gnu-64bit-build1.tar.xz"
-    echo -e "${YELLOW}使用备用URL: $ARIA2_URL${NC}"
+    echo -e "${YELLOW}主地址不可用，尝试备用镜像...${NC}"
+    for url in "${BACKUP_URLS[@]}"; do
+        if curl -sf --max-time 15 -I "$url" >/dev/null 2>&1; then
+            ARIA2_URL="$url"
+            echo -e "${GREEN}使用备用镜像: ${url}${NC}"
+            break
+        fi
+    done
 fi
 
+if [ -z "$ARIA2_URL" ]; then
+    echo -e "${RED}错误: 所有下载地址均不可用${NC}"
+    exit 1
+fi
+
+# 下载文件（带重试）
 for i in {1..3}; do
-    if wget -q --timeout=30 "$ARIA2_URL" -O aria2.tar.xz; then
-        echo -e "${GREEN}aria2下载成功${NC}"
+    if wget -q --timeout=30 --tries=1 "$ARIA2_URL" -O "$ARIA2_FILE"; then
+        echo -e "${GREEN}aria2 下载成功${NC}"
+        DOWNLOAD_SUCCESS=true
         break
     else
-        echo -e "${YELLOW}aria2下载失败，重试 $i/3...${NC}"
-        sleep 2
-        if [ $i -eq 3 ]; then
-            echo -e "${RED}错误: aria2下载失败${NC}"
-            exit 1
-        fi
+        echo -e "${YELLOW}下载失败，重试 $i/3...${NC}"
+        sleep 3
     fi
 done
 
-if ! tar -xf aria2.tar.xz; then
-    echo -e "${RED}错误: aria2解压失败${NC}"
+if [ "$DOWNLOAD_SUCCESS" = false ]; then
+    echo -e "${RED}错误: aria2 下载失败${NC}"
     exit 1
 fi
 
-ARIA2_DIR=$(find . -name "aria2-*" -type d 2>/dev/null | head -1)
-if [ -z "$ARIA2_DIR" ]; then
-    echo -e "${RED}错误: 未找到aria2目录${NC}"
+# 解压 ZIP（直接得到 aria2c）
+if ! unzip -q "$ARIA2_FILE"; then
+    echo -e "${RED}错误: 解压失败${NC}"
     exit 1
 fi
 
-if [ ! -f "$ARIA2_DIR/bin/aria2c" ]; then
-    echo -e "${RED}错误: 未找到aria2c可执行文件${NC}"
+# 检查 aria2c 是否存在（就在当前目录）
+if [ ! -f "aria2c" ]; then
+    echo -e "${RED}错误: 解压后未找到 aria2c 可执行文件${NC}"
     exit 1
 fi
 
-cp "$ARIA2_DIR/bin/aria2c" "$ORIGINAL_DIR/$BUILD_DIR/aria2c"
+# 复制到目标目录并赋予执行权限
+cp "aria2c" "$ORIGINAL_DIR/$BUILD_DIR/aria2c"
+chmod +x "$ORIGINAL_DIR/$BUILD_DIR/aria2c"
+
+# 可选：清理临时文件
+rm -f "$ARIA2_FILE" aria2c
 
 cd "$ORIGINAL_DIR"
 rm -rf "$TEMP_DIR"
