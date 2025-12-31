@@ -1,4 +1,3 @@
 PyQt5==5.15.6
-PIL
 # qtdesigner (in development)
 # pyqt5-tools

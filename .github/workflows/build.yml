@@ -138,7 +138,7 @@ jobs:
         pip install pyinstaller
     - name: build py to exe
       run: |
-        pyinstaller --noconfirm --onefile --noconsole --icon "./BBDown_GUI/UI/favicon.png" --add-data "./BBDown_GUI/UI/favicon.png;./UI"  "./build-to-exe.py"
+        pyinstaller --noconfirm --onefile --noconsole --icon "./BBDown_GUI/UI/favicon.ico" --add-data "./BBDown_GUI/UI/favicon.ico;./UI"  "./build-to-exe.py"
         mv ./dist/build-to-exe.exe ./dist/BBDown_GUI.exe
     
     - name: Upload Windows Artifact
