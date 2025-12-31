@@ -267,12 +267,14 @@ cat > "$APPDIR/usr/share/applications/bbdown-gui.desktop" << EOF
 Version=1.0
 Type=Application
 Name=BBDown GUI
+GenericName=Bilibili Video Downloader GUI
 Comment=GUI for BBDown video downloader
 Exec=bbdown-gui
 Icon=bbdown-gui
 Categories=AudioVideo;Video;
 Terminal=false
 StartupNotify=true
+StartupWMClass=BBDown_GUI
 EOF
 
 # 创建AppRun文件
@@ -292,7 +294,7 @@ chmod +x "$APPDIR/AppRun"
 cat > "$APPDIR/usr/share/metainfo/bbdown-gui.appdata.xml" << EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>bbdown-gui.desktop</id>
+  <id>com.github.muwenyan521.bbdown-gui</id>
   <name>BBDown GUI</name>
   <summary>GUI for BBDown video downloader</summary>
   <description>
@@ -301,8 +303,40 @@ cat > "$APPDIR/usr/share/metainfo/bbdown-gui.appdata.xml" << EOF
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
   <url type="homepage">https://github.com/muwenyan521/BBDown_GUI</url>
-  <developer_name>BBDown GUI Developers</developer_name>
-  <update_contact>muwenyan521</update_contact>
+  <developer>
+    <name>BBDown GUI Developers</name>
+  </developer>
+  <update_contact>muwenyan521@gmail.com</update_contact>
+  <launchable type="desktop-id">com.github.muwenyan521.bbdown-gui.desktop</launchable>
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">none</content_attribute>
+    <content_attribute id="violence-fantasy">none</content_attribute>
+    <content_attribute id="violence-realistic">none</content_attribute>
+    <content_attribute id="violence-bloodshed">none</content_attribute>
+    <content_attribute id="violence-sexual">none</content_attribute>
+    <content_attribute id="violence-desecration">none</content_attribute>
+    <content_attribute id="violence-slavery">none</content_attribute>
+    <content_attribute id="violence-worship">none</content_attribute>
+    <content_attribute id="drugs-alcohol">none</content_attribute>
+    <content_attribute id="drugs-narcotics">none</content_attribute>
+    <content_attribute id="drugs-tobacco">none</content_attribute>
+    <content_attribute id="sex-nudity">none</content_attribute>
+    <content_attribute id="sex-themes">none</content_attribute>
+    <content_attribute id="sex-homosexuality">none</content_attribute>
+    <content_attribute id="sex-prostitution">none</content_attribute>
+    <content_attribute id="sex-adultery">none</content_attribute>
+    <content_attribute id="sex-appearance">none</content_attribute>
+    <content_attribute id="language-profanity">none</content_attribute>
+    <content_attribute id="language-humor">none</content_attribute>
+    <content_attribute id="language-discrimination">none</content_attribute>
+    <content_attribute id="social-chat">none</content_attribute>
+    <content_attribute id="social-info">none</content_attribute>
+    <content_attribute id="social-audio">none</content_attribute>
+    <content_attribute id="social-location">none</content_attribute>
+    <content_attribute id="social-contacts">none</content_attribute>
+    <content_attribute id="money-purchasing">none</content_attribute>
+    <content_attribute id="money-gambling">none</content_attribute>
+  </content_rating>
   <releases>
     <release version="1.0.0" date="2024-01-01"/>
   </releases>
