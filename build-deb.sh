@@ -36,6 +36,9 @@ BUILD_DIR="build_deb"
 DIST_DIR="dist"
 DEB_DIR="$BUILD_DIR/${PACKAGE_NAME}_${VERSION}_${ARCH}"
 
+# 保存原始工作目录
+ORIGINAL_DIR=$(pwd)
+
 echo -e "${YELLOW}清理旧构建文件...${NC}"
 rm -rf "$BUILD_DIR" "$DIST_DIR/${PACKAGE_NAME}_${VERSION}_${ARCH}.deb"
 
@@ -69,7 +72,7 @@ FFMPEG_URL="https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpe
 wget -q "$FFMPEG_URL" -O ffmpeg.tar.xz
 tar -xf ffmpeg.tar.xz
 FFMPEG_DIR=$(find . -name "ffmpeg-master-latest-linux64-gpl" -type d)
-cp "$FFMPEG_DIR/bin/ffmpeg" "../$BUILD_DIR/ffmpeg"
+cp "$FFMPEG_DIR/bin/ffmpeg" "$ORIGINAL_DIR/$BUILD_DIR/ffmpeg"
 
 # 下载BBDown (Linux版本)
 echo -e "${YELLOW}下载BBDown...${NC}"
@@ -80,7 +83,7 @@ if [ -z "$BBDOWN_URL" ]; then
 fi
 wget -q "$BBDOWN_URL" -O bbdown.zip
 unzip -q bbdown.zip
-cp BBDown "../$BUILD_DIR/bbdown"
+cp BBDown "$ORIGINAL_DIR/$BUILD_DIR/bbdown"
 
 # 下载aria2 (Linux版本)
 echo -e "${YELLOW}下载aria2...${NC}"
@@ -92,9 +95,9 @@ fi
 wget -q "$ARIA2_URL" -O aria2.tar.xz
 tar -xf aria2.tar.xz
 ARIA2_DIR=$(find . -name "aria2-*" -type d | head -1)
-cp "$ARIA2_DIR/bin/aria2c" "../$BUILD_DIR/aria2c"
+cp "$ARIA2_DIR/bin/aria2c" "$ORIGINAL_DIR/$BUILD_DIR/aria2c"
 
-cd ..
+cd "$ORIGINAL_DIR"
 rm -rf "$TEMP_DIR"
 
 # 使用PyInstaller构建可执行文件
