@@ -1,5 +1,6 @@
 include README.md
 include LICENSE
+include BBDown_GUI/UI/favicon.ico
 include BBDown_GUI/UI/favicon.png
 # Windows executables
 include BBDown_GUI/BBDown.exe
