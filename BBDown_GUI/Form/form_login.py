@@ -10,7 +10,6 @@ from BBDown_GUI.UI.ui_qrcode import Ui_Form_QRcode
 from BBDown_GUI.tool import get_workdir, get_bbdowndir, resource_path
 
 workdir = get_workdir()
-bbdowndir = get_bbdowndir()
 
 class workthread(QThread):
     signal = pyqtSignal(str)
@@ -26,7 +25,7 @@ class workthread(QThread):
                 time.sleep(1)
                 self.signal.emit("关闭窗口")
                 break
-            elif os.path.exists(os.path.join(os.getcwd(), "qrcode.png")):
+            elif os.path.exists(os.path.join(workdir, "qrcode.png")):
                 self.signal.emit("请扫描二维码")
             else:
                 self.signal.emit("未获取到信息")
@@ -44,16 +43,24 @@ class FormLogin(QMainWindow, Ui_Form_QRcode):
             os.remove(os.path.join(workdir, "BBDown.data"))
         if (arg == "logintv") and (os.path.exists(os.path.join(workdir, "BBDownTV.data"))):
             os.remove(os.path.join(workdir, "BBDownTV.data"))
-        subprocess.Popen(f'"{bbdowndir}" {self.arg}', shell=True)
+        env = os.environ.copy()
+        env["LANG"] = "C.UTF-8"
+        self.p = subprocess.Popen(
+            [get_bbdowndir(), self.arg],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            env=env,
+            cwd=workdir,
+            universal_newlines=True
+        )
         self.execute()
     def execute(self):
         self.work = workthread(self.arg)
         self.work.start()
         self.work.signal.connect(self.display)
     def display(self, s):
-        # qrcode.png 的生成位置在当前命令行的位置，不是bbdown的位置 Line 84 附近也要改
-        # self.label_QR.setPixmap(QPixmap(os.path.join(workdir, "qrcode.png")))
-        self.label_QR.setPixmap(QPixmap(os.path.join(os.getcwd(), "qrcode.png")))
+        # qrcode.png 保存在应用工作目录
+        self.label_QR.setPixmap(QPixmap(os.path.join(workdir, "qrcode.png")))
         self.label.setText(s)
         if s == "关闭窗口":
             self.close()

@@ -1,5 +1,6 @@
 import os
-import json
+import sys
+import subprocess
 
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
 from PyQt5.QtGui import QPixmap, QIcon
@@ -12,6 +13,19 @@ from BBDown_GUI.Form.form_about import FormAbout
 
 from BBDown_GUI.tool import resource_path, get_workdir, get_bbdowndir
 
+
+def is_windows():
+    """检测是否为 Windows 平台"""
+    return sys.platform == "win32"
+
+
+def add_exe_suffix(filename):
+    """根据平台动态添加 .exe 后缀"""
+    if is_windows():
+        if not filename.endswith(".exe"):
+            return filename + ".exe"
+    return filename
+
 workdir = get_workdir()
 bbdowndir = get_bbdowndir()
 
@@ -19,7 +33,7 @@ bbdowndir = get_bbdowndir()
 class FormMain(QMainWindow, Ui_Form_main):
     def __init__(self):
         def Load(self):
-            f = open(os.path.join(workdir, "config.json"), "r")
+            f = open(os.path.join(workdir, "config.json"), "r", encoding="utf-8")
             config = json.loads(f.read())
             f.close()
             for item in config:
@@ -47,8 +61,8 @@ class FormMain(QMainWindow, Ui_Form_main):
         self.setWindowIcon(icon)
         self.pushButton_login.clicked.connect(self.login)
         self.pushButton_logintv.clicked.connect(self.logintv)
-        self.lineEdit_ffmpeg.setText(os.path.join(workdir, "ffmpeg.exe"))
-        self.lineEdit_aria2c_path.setText(os.path.join(workdir, "aria2c.exe"))
+        self.lineEdit_ffmpeg.setText(os.path.join(workdir, add_exe_suffix("ffmpeg")))
+        self.lineEdit_aria2c_path.setText(os.path.join(workdir, add_exe_suffix("aria2c")))
         self.lineEdit_dir.setText(os.path.join(workdir, "Download"))
         self.lineEdit_bbdown.setText(bbdowndir)
         self.pushButton_ffmpeg.clicked.connect(self.ffmpegpath)
@@ -77,20 +91,22 @@ class FormMain(QMainWindow, Ui_Form_main):
 
     # 设置ffmpeg位置
     def ffmpegpath(self):
-        filepath, _ = QFileDialog.getOpenFileName(self, "选择文件", os.getcwd(), "ffmpeg (ffmpeg.exe);;All Files (*.*)")
-        filepath = filepath.replace("/","\\")
+        filepath, _ = QFileDialog.getOpenFileName(self, "选择文件", os.getcwd(), "所有文件 (*.*)")
         self.lineEdit_ffmpeg.setText(filepath)
 
     # 设置下载目录
     def opendownpath(self):
         if not os.path.exists(self.lineEdit_dir.text()):
             os.makedirs(self.lineEdit_dir.text())
-        os.startfile(self.lineEdit_dir.text())
+        path = self.lineEdit_dir.text()
+        if is_windows():
+            os.startfile(path)
+        else:
+            subprocess.run(['xdg-open', path])
 
     # 设置BBDown位置
     def bbdownpath(self):
-        filepath, _ = QFileDialog.getOpenFileName(self, "选择文件", os.getcwd(), "BBDown (BBDown.exe);;All Files (*.*)")
-        filepath = filepath.replace("/","\\")
+        filepath, _ = QFileDialog.getOpenFileName(self, "选择文件", os.getcwd(), "所有文件 (*.*)")
         self.lineEdit_bbdown.setText(filepath)
         global bbdowndir
         bbdowndir = self.lineEdit_bbdown.text()
@@ -254,7 +270,7 @@ class FormMain(QMainWindow, Ui_Form_main):
                 elif i[:9]=="comboBox_":
                     exec(f"config[i] = self.{i}.currentIndex()")
             config["advanced"] = self.advanced
-            f = open(os.path.join(workdir, "config.json"), "w")
+            f = open(os.path.join(workdir, "config.json"), "w", encoding="utf-8")
             f.write(json.dumps(config, indent=4))
             f.close()
 

@@ -9,8 +9,14 @@ def get_workdir():
         workdir = os.path.dirname(os.path.abspath(__file__))
     return workdir
 
+def get_bbdown_executable():
+    """动态获取 BBDown 可执行文件名"""
+    if sys.platform == 'win32':
+        return "BBDown.exe"
+    return "BBDown"
+
 def get_bbdowndir():
-    bbdowndir = os.path.join(get_workdir(), "BBDown.exe")
+    bbdowndir = os.path.join(get_workdir(), get_bbdown_executable())
     return bbdowndir
 
 # 显示图标
