@@ -2,6 +2,7 @@ import os
 import platform
 import signal
 import subprocess
+import shlex
 
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtGui import QPixmap, QIcon
@@ -18,7 +19,7 @@ class DownloadThread(QThread):
         env = os.environ.copy()
         env["LANG"] = "C.UTF-8"
         # Use list arguments and avoid shell=True for cross-platform compatibility
-        cmd_list = [get_bbdowndir()] + args.split()
+        cmd_list = [get_bbdowndir()] + shlex.split(args)
         self.p = subprocess.Popen(
             cmd_list,
             stdout=subprocess.PIPE,

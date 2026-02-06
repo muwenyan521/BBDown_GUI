@@ -1,6 +1,7 @@
 import os
 import sys
 import subprocess
+import json
 
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
 from PyQt5.QtGui import QPixmap, QIcon
